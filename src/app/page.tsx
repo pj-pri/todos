@@ -1,101 +1,201 @@
-import Image from "next/image";
+'use client';
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/components/ui/table';
+import { Button, buttonVariants } from '@/components/ui/button';
+import Link from 'next/link';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
+
+import { useId, useState } from 'react';
+
+type listType = {
+	name: string;
+	content: string;
+};
+
+type cardType = {
+	name: string;
+	contents: string[];
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+	const mock_list: listType[] = [
+		{
+			name: '홍길동',
+			content: '새로운 기술 배우기 새로운 기술 배우기 새로운 기술 배우기',
+		},
+		{
+			name: '홍길동2',
+			content: '마음 챙기기 마음 챙기기 마음 챙기기 마음 챙기기',
+		},
+		{
+			name: '홍길동3',
+			content:
+				'건강한 습관 실천하기 건강한 습관 실천하기 건강한 습관 실천하기 ',
+		},
+		{
+			name: '홍길동4',
+			content:
+				'네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기',
+		},
+	];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+	const mock_cards: cardType[] = [
+		{
+			name: '홍길동',
+			contents: [
+				'마음 챙기기 마음 챙기기 마음 챙기기 마음 챙기기',
+				'건강한 습관 실천하기 건강한 습관 실천하기 건강한 습관 실천하기 ',
+				'네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기',
+			],
+		},
+
+		{
+			name: '홍길동2',
+			contents: [
+				'마음 챙기기 마음 챙기기 마음 챙기기 마음 챙기기',
+				'건강한 습관 실천하기 건강한 습관 실천하기 건강한 습관 실천하기 ',
+				'네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기',
+			],
+		},
+		{
+			name: '홍길동3',
+			contents: [
+				'마음 챙기기 마음 챙기기 마음 챙기기 마음 챙기기',
+				'건강한 습관 실천하기 건강한 습관 실천하기 건강한 습관 실천하기 ',
+				'네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기 네트워크 확장하기',
+			],
+		},
+	];
+
+	const [tab, setTab] = useState<string>('list');
+
+	return (
+		<div className="flex flex-col h-screen w-full px-30px">
+			<div className="w-full p-10px">
+				<h1 className="text-24px font-bold">Time Capsule</h1>
+				<p className="mt-10px">
+					Lorem ipsum dolor sit amet consectetur.
+				</p>
+			</div>
+			<div className="h-screen flex border-t border-solid border-slate-300 mt-10px pt-10px">
+				<div className="flex-shrink-0 w-[200px] bg-slate-200 h-full">
+					<ul className="w-full bg-white">
+						<li>
+							<Link
+								className={buttonVariants({
+									variant: 'ghost',
+									className: 'w-full !justify-start',
+								})}
+								href={'/'}
+								onClick={() => setTab('list')}
+							>
+								리스트 보기
+							</Link>
+						</li>
+						<li>
+							<Button
+								variant="ghost"
+								className="w-full !justify-start"
+								onClick={() => setTab('card')}
+							>
+								카드 보기
+							</Button>
+						</li>
+					</ul>
+				</div>
+				{/* contents */}
+				<div className="w-full">
+					{tab === 'list' && (
+						<Table className="max-w-full p-10px">
+							<TableHeader>
+								<TableRow>
+									<TableHead className="w-[100px] text-center">
+										이름
+									</TableHead>
+									<TableHead className="text-center">
+										목표
+									</TableHead>
+									<TableHead className="text-center">
+										달성
+									</TableHead>
+								</TableRow>
+							</TableHeader>
+
+							<TableBody>
+								{mock_list.map((item) => (
+									<TableRow key={item.name}>
+										<TableCell className="font-medium">
+											{item.name}
+										</TableCell>
+										<TableCell>{item.content}</TableCell>
+										<TableCell className="text-center">
+											<Checkbox />
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					)}
+					{tab === 'card' && (
+						<div
+							style={{
+								display: 'grid',
+								gridTemplateRows: '1fr 1fr 1fr',
+								gap: '10px',
+							}}
+							className="p-30px"
+						>
+							{mock_cards.map((item) => (
+								<Card key={item.name}>
+									<CardHeader>
+										<CardTitle>{item.name}</CardTitle>
+										<CardDescription>
+											올 한해 목표
+										</CardDescription>
+									</CardHeader>
+									<CardContent>
+										<ul className="flex flex-col gap-2">
+											{item.contents.map((txt) => (
+												<li key={txt}>
+													<CheckBox2 text={txt} />
+												</li>
+											))}
+										</ul>
+									</CardContent>
+								</Card>
+							))}
+						</div>
+					)}
+				</div>
+			</div>
+		</div>
+	);
 }
+
+const CheckBox2 = ({ text }: { text: string }) => {
+	const id = useId();
+	return (
+		<div className="flex items-center space-x-2">
+			<Checkbox id={id} />
+			<label
+				htmlFor={id}
+				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+			>
+				{text}
+			</label>
+		</div>
+	);
+};
